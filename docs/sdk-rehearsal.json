@@ -1,0 +1,89 @@
+{
+  "answer": "[Scripted SDK rehearsal] A KES 4500 demo refund is proposed. Please confirm in the app.",
+  "trace": [
+    {
+      "type": "tool_call",
+      "name": "get_order",
+      "args": {
+        "order_id": "KE-1042"
+      }
+    },
+    {
+      "type": "tool_result",
+      "name": "get_order",
+      "result": {
+        "status": "delivered",
+        "order_id": "KE-1042",
+        "item": "Headphones",
+        "amount_kes": 4500,
+        "days_since_delivery": 3
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "get_refund_policy",
+      "args": {}
+    },
+    {
+      "type": "tool_result",
+      "name": "get_refund_policy",
+      "result": {
+        "version": "demo-v1",
+        "window_days": 14,
+        "eligible_reasons": [
+          "damaged",
+          "wrong_item"
+        ],
+        "currency": "KES"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "quote_refund",
+      "args": {
+        "order_id": "KE-1042",
+        "reason": "damaged"
+      }
+    },
+    {
+      "type": "tool_result",
+      "name": "quote_refund",
+      "result": {
+        "status": "eligible",
+        "eligible": true,
+        "amount_kes": 4500,
+        "currency": "KES"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "propose_refund",
+      "args": {
+        "order_id": "KE-1042",
+        "reason": "damaged"
+      }
+    },
+    {
+      "type": "tool_result",
+      "name": "propose_refund",
+      "result": {
+        "status": "awaiting_confirmation",
+        "order_id": "KE-1042",
+        "reason": "damaged",
+        "amount_kes": 4500,
+        "currency": "KES",
+        "policy_version": "demo-v1"
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "order_id": "KE-1042",
+      "reason": "damaged",
+      "amount_kes": 4500,
+      "currency": "KES",
+      "policy_version": "demo-v1"
+    }
+  ],
+  "mode": "offline_scripted_sdk_rehearsal_not_gemini"
+}
