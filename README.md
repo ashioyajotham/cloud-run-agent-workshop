@@ -35,7 +35,6 @@ For the local key path use `GOOGLE_GENAI_USE_VERTEXAI=FALSE`. `GEMINI_API_KEY` i
 | File | Purpose |
 | --- | --- |
 | `docs/participant-lab.md` | Guided exercises and checkpoints |
-| `docs/facilitator.md` | Minute-by-minute delivery and demo script |
 | `docs/cloud-run.md` | Project setup, IAM, deployment and cleanup |
 | `docs/compatibility.md` | Verified dependencies, current docs and update procedure |
 | `docs/validation.md` | What has been tested and what remains |
