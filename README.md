@@ -37,7 +37,6 @@ For the local key path use `GOOGLE_GENAI_USE_VERTEXAI=FALSE`. `GEMINI_API_KEY` i
 | `docs/participant-lab.md` | Guided exercises and checkpoints |
 | `docs/cloud-run.md` | Project setup, IAM, deployment and cleanup |
 | `docs/compatibility.md` | Verified dependencies, current docs and update procedure |
-| `docs/validation.md` | What has been tested and what remains |
 | `exercises/add_tool.py` | Participant delivery-status tool exercise |
 | `exercises/solution.py` | Reference solution |
 | `scripts/live_eval.py` | Six-case real Gemini evaluation |
