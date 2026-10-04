@@ -10,8 +10,15 @@ ORDERS = {
     "KE-1042": {"item": "Headphones", "amount_kes": 4500, "days_since_delivery": 3, "status": "delivered"},
     "KE-1043": {"item": "Keyboard", "amount_kes": 6200, "days_since_delivery": 45, "status": "delivered"},
     "KE-1044": {"item": "USB hub", "amount_kes": 1800, "days_since_delivery": 0, "status": "in_transit"},
+    "KE-1045": {"item": "Laptop stand", "amount_kes": 3200, "days_since_delivery": 7, "status": "delivered"},
 }
 POLICY = {"version": "demo-v1", "window_days": 14, "eligible_reasons": ["damaged", "wrong_item"], "currency": "KES"}
+STORE_CREDITS = {
+    "KE-1042": {"balance_kes": 0, "currency": "KES"},
+    "KE-1043": {"balance_kes": 500, "currency": "KES"},
+    "KE-1044": {"balance_kes": 0, "currency": "KES"},
+    "KE-1045": {"balance_kes": 1500, "currency": "KES"},
+}
 
 
 def eligibility(order_id: str, reason: str) -> dict:
@@ -95,3 +102,17 @@ class SupportTools:
         if not any(p["order_id"] == order_id for p in self.proposals):
             self.proposals.append(signed)
         return {"status": "awaiting_confirmation", **proposal}
+
+    def get_store_credit(self, order_id: str) -> dict:
+        """Check the store credit balance associated with a demo order.
+
+        Use this when a customer asks about existing credit, or before proposing
+        a cash refund to see if partial store credit applies. Returns the balance
+        in KES; a zero balance means no credit is available.
+        """
+        if self.scenario == "lookup_failure":
+            return {"status": "unavailable", "retryable": False, "message": "Credit backend is unavailable. Escalate; do not guess."}
+        credit = STORE_CREDITS.get(order_id)
+        if credit is None:
+            return {"status": "not_found", "balance_kes": 0, "currency": "KES"}
+        return {"status": "found", "order_id": order_id, **credit}

@@ -1,0 +1,34 @@
+# Cloud Build — continuous deployment to Cloud Run.
+# Connect this repo in Cloud Build > Triggers > Connect Repository.
+# Set substitutions: _REGION, _SERVICE, _RUNTIME_SA in the trigger config.
+# Requires the Cloud Build service account to have roles/run.developer and
+# roles/iam.serviceAccountUser on the runtime service account.
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: deploy
+    args:
+      - run
+      - deploy
+      - '$_SERVICE'
+      - '--project=$PROJECT_ID'
+      - '--region=$_REGION'
+      - '--source=.'
+      - '--service-account=$_RUNTIME_SA'
+      - '--no-allow-unauthenticated'
+      - >-
+        --set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=TRUE,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=global,GEMINI_MODEL=gemini-3.8-flash
+      - '--set-secrets=PROPOSAL_SIGNING_KEY=workshop-proposal-key:1'
+      - '--memory=512Mi'
+      - '--cpu=1'
+      - '--concurrency=8'
+      - '--min-instances=0'
+      - '--max-instances=2'
+      - '--timeout=90'
+
+substitutions:
+  _REGION: europe-west1
+  _SERVICE: support-agent-workshop
+  _RUNTIME_SA: support-agent-runtime@${PROJECT_ID}.iam.gserviceaccount.com
+
+options:
+  logging: CLOUD_LOGGING_ONLY

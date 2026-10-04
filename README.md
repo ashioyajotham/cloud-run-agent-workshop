@@ -41,6 +41,7 @@ For the local key path use `GOOGLE_GENAI_USE_VERTEXAI=FALSE`. `GEMINI_API_KEY` i
 | `exercises/solution.py` | Reference solution |
 | `scripts/live_eval.py` | Six-case real Gemini evaluation |
 | `tests/test_workshop.py` | Policy, API and real ADK runner integration tests |
+| `cloudbuild.yaml` | Cloud Build trigger for continuous deployment to Cloud Run |
 
 ## Deploy
 
